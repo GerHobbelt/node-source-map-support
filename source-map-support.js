@@ -297,12 +297,16 @@ function wrapCallSite(frame) {
 // http://code.google.com/p/v8/wiki/JavaScriptStackTraceApi
 function prepareStackTrace(error, stack) {
   if (emptyCacheBetweenOperations) {
-    fileContentsCache = {};
-    sourceMapCache = {};
+    emptyCache()
   }
   return error + stack.map(function(frame) {
     return '\n    at ' + wrapCallSite(frame);
   }).join('');
+}
+
+function emptyCache() {
+  fileContentsCache = {};
+  sourceMapCache = {};
 }
 
 // Generate position and snippet of original source with pointer
@@ -345,6 +349,7 @@ function handleUncaughtExceptions(error) {
   process.exit(1);
 }
 
+exports.emptyCache = emptyCache;
 exports.wrapCallSite = wrapCallSite;
 exports.getErrorSource = getErrorSource;
 exports.mapSourcePosition = mapSourcePosition;

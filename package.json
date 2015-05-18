@@ -1,7 +1,7 @@
 {
-  "name": "source-map-support",
+  "name": "node-source-map",
   "description": "Fixes stack traces for files with source maps",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "main": "./source-map-support.js",
   "scripts": {
     "test": "node_modules/mocha/bin/mocha"
@@ -16,10 +16,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/evanw/node-source-map-support"
+    "url": "https://github.com/aleclarson/source-map"
   },
   "bugs": {
-    "url": "https://github.com/evanw/node-source-map-support/issues"
+    "url": "https://github.com/aleclarson/source-map/issues"
   },
   "licenses": [
     {
