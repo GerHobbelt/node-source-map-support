@@ -261,18 +261,19 @@ function cloneCallSite(frame) {
   return object;
 }
 
-function wrapCallSite(frame) {
+function wrapCallSite(callSite) {
   // Most call sites will return the source file from getFileName(), but code
   // passed to eval() ending in "//# sourceURL=..." will return the source file
   // from getScriptNameOrSourceURL() instead
-  var source = frame.getFileName() || frame.getScriptNameOrSourceURL();
+  var source = callSite.getFileName() || callSite.getScriptNameOrSourceURL();
   if (source) {
     var position = mapSourcePosition({
       source: source,
-      line: frame.getLineNumber(),
-      column: frame.getColumnNumber() - 1
+      line: callSite.getLineNumber(),
+      column: callSite.getColumnNumber() - 1
     });
-    frame = cloneCallSite(frame);
+    var frame = cloneCallSite(callSite);
+    frame.orig = callSite;
     frame.getFileName = function() { return position.source; };
     frame.getLineNumber = function() { return position.line; };
     frame.getColumnNumber = function() { return position.column + 1; };
@@ -281,16 +282,16 @@ function wrapCallSite(frame) {
   }
 
   // Code called using eval() needs special handling
-  var origin = frame.isEval() && frame.getEvalOrigin();
+  var origin = callSite.isEval() && callSite.getEvalOrigin();
   if (origin) {
     origin = mapEvalOrigin(origin);
-    frame = cloneCallSite(frame);
+    var frame = cloneCallSite(callSite);
     frame.getEvalOrigin = function() { return origin; };
     return frame;
   }
 
   // If we get here then we were unable to change the source position
-  return frame;
+  return callSite;
 }
 
 // This function is part of the V8 stack trace API, for more info see:
