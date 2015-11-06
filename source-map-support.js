@@ -326,6 +326,11 @@ function wrapCallSite(frame) {
       line: line,
       column: column
     });
+
+    if (/source-map-support\/source-map-support\.js/.test(position.source)) {
+      return;
+    }
+
     frame = cloneCallSite(frame);
     frame.getFileName = function() { return position.source; };
     frame.getLineNumber = function() { return position.line; };
@@ -356,7 +361,13 @@ function prepareStackTrace(error, stack) {
   }
 
   return error + stack.map(function(frame) {
-    return '\n    at ' + wrapCallSite(frame);
+    frame = wrapCallSite(frame);
+
+    if (frame) {
+      return '\n    at ' + frame;
+    } else {
+      return '';
+    }
   }).join('');
 }
 
