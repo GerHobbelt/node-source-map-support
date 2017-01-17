@@ -1,7 +1,7 @@
 {
-  "name": "source-map-support",
+  "name": "better-source-map-support",
   "description": "Fixes stack traces for files with source maps",
-  "version": "0.4.9",
+  "version": "0.0.1",
   "main": "./source-map-support.js",
   "scripts": {
     "build": "node build.js",
@@ -21,10 +21,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/evanw/node-source-map-support"
+    "url": "https://github.com/hendrixer/node-source-map-support"
   },
   "bugs": {
-    "url": "https://github.com/evanw/node-source-map-support/issues"
+    "url": "https://github.com/hendrixer/node-source-map-support/issues"
   },
   "license": "MIT"
 }
